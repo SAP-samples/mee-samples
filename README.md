@@ -1,12 +1,12 @@
-# [Title]
-MEE samples
+# BTP and BDC samples
+Samples for BTP and BDC from the Customer Advisory organisation of Middle & Eastern Europe
 
 <!--- Register repository https://api.reuse.software/register, then add REUSE badge:
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/REPO-NAME)](https://api.reuse.software/info/github.com/SAP-samples/REPO-NAME)
 -->
 
 ## Description
-Sample code from the Middle & Eastern Europe region
+Repository to provide sample code for various components of SAP BTP and BDC. Some of the content belongs to blogs published on the [SAP Community](https://blogs.sap.com/)
 
 ## Requirements
 Specified in the individual samples
