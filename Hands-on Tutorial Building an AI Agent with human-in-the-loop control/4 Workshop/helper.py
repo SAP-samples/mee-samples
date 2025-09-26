@@ -28,6 +28,8 @@ from langchain_core.tools import tool
 import getpass, socket, hashlib
 from dotenv import load_dotenv
 from langchain_mcp_adapters.client import MultiServerMCPClient
+from pydantic import BaseModel, Field
+from datetime import date
 
 load_dotenv()
 
@@ -79,6 +81,8 @@ class ExternalTimeData(TypedDict):
 
 def build_post_payload(data: ExternalTimeData, base_url):
     # Convert startDate to OData format and add userId
+    data = data.model_dump()
+    # payload = data.model_dump()
     payload = dict(data)
     payload['startDate'] = f"/Date({int(datetime.fromisoformat(data['startDate']).timestamp()) * 1000})/"
     payload['externalCode'] = str(uuid.uuid1())
@@ -91,7 +95,6 @@ def build_post_payload(data: ExternalTimeData, base_url):
     # Define url
     table = 'ExternalTimeData'
     url = f'{base_url}{table}'
-
     return payload, url
 
 
