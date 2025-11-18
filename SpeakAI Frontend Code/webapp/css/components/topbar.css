@@ -1,0 +1,58 @@
+/* Top application toolbar (App header) */
+.appTopBar.sapMTB {
+  background-color: var(--brandPrimary);
+  color: #fff;
+  box-shadow: none;
+  border: 0;
+}
+.appTopBar .sapMTitle {
+  color: #fff;
+}
+
+/* Topbar sidebar ToggleButton - force white icon and remove default overlays */
+.appTopBar [id$="--sidebarToggleBtn"].sapMBtn .sapMBtnInner,
+.appTopBar [id$="--sidebarToggleBtn"].sapMBtn:hover .sapMBtnInner,
+.appTopBar [id$="--sidebarToggleBtn"].sapMBtn:focus .sapMBtnInner,
+.appTopBar [id$="--sidebarToggleBtn"].sapMBtn:active .sapMBtnInner,
+.appTopBar [id$="--sidebarToggleBtn"].sapMBtn.sapMToggleBtnPressed .sapMBtnInner {
+  background: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.appTopBar [id$="--sidebarToggleBtn"] .sapUiIcon {
+  color: #fff !important;
+  background: transparent !important;
+}
+
+/* Subheader: remove dividers and add space above content */
+.subHeaderBar.sapMTB {
+  box-shadow: none;
+  border: 0;
+  padding-top: 0.5rem;
+}
+
+/* Remove lines between header, subheader, and content for this page */
+[id$="--mainPage"] .sapMPageHeader,
+[id$="--mainPage"] .sapMPageSubHeader {
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+/* Small, centered subheader date/time */
+.subHeaderText {
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+/* Make the date bold and add spacing before time */
+.subHeaderDate {
+  font-weight: 700;
+  color: white;
+}
+.subHeaderTime {
+  font-weight: 400;
+  margin-left: 0.25rem;
+  color: white;
+}

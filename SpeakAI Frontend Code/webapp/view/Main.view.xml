@@ -1,0 +1,169 @@
+<mvc:View
+	controllerName="com.sap.aiagentspeaker.controller.Main"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout"
+	core:require="{
+		formatter: 'com/sap/aiagentspeaker/model/formatter'
+	}">
+	<Page id="mainPage" title="{i18n>title}" class="sapUiSizeCompact" enableScrolling="false">
+		<customHeader>
+			<Toolbar class="appTopBar">
+			    <ToggleButton
+					id="sidebarToggleBtn"
+					press=".onToggleSidebar"
+					icon="sap-icon://menu2"
+					tooltip="Toggle sidebar"
+					type="Transparent"
+					pressed="{ui>/sidebarOpen}" />
+				<Title text="{i18n>title}" level="H2" />
+				<!-- <ToolbarSpacer />
+				<HBox class="subHeaderText" alignItems="Center" justifyContent="Center">
+					<Text class="subHeaderDate" text="{ui>/dateLabel}" />
+					<Text class="subHeaderTime" text="{ui>/timeLabel}" />
+				</HBox> -->
+				<ToolbarSpacer />
+				<MessageStrip
+					text="{= 'Connection: ' + ${agent>/status} }"
+					type="{= ${agent>/status} === 'connected' ? 'Success' : (${agent>/status} === 'error' || ${agent>/status} === 'disconnected' ? 'Error' : 'Information') }"
+					showIcon="true"
+					showCloseButton="false" />
+			</Toolbar>
+		</customHeader>
+
+		<!-- <subHeader>
+			<Toolbar class="subHeaderBar">
+				<ToolbarSpacer />
+
+				<ToolbarSpacer />
+			</Toolbar>
+		</subHeader> -->
+
+		<content>
+			<VBox class="sidebarPanel overlaySidebar" width="40%" visible="{ui>/sidebarOpen}">
+				<Text text="Sidebar" />
+			</VBox>
+			<l:Splitter id="mainSplitter" height="100%">
+				<l:contentAreas>
+					<VBox id="speakersTableContainer" height="100%" renderType="Div" class="speakersTableContainer">
+						<layoutData>
+							<l:SplitterLayoutData size="40%" minSize="320" resizable="true" />
+						</layoutData>
+						<!-- Provide a stable ID for the nested view so that inner controls (e.g. speakersTable) get a stable global ID for flexibility -->
+						<mvc:XMLView id="tablePropInfosView" viewName="com.sap.aiagentspeaker.view.TablePropertyInfos" />
+					</VBox>
+					<VBox id="chatArea" height="100%" renderType="Div" class="chatArea">
+						<layoutData>
+							<l:SplitterLayoutData size="60%" minSize="300" resizable="true" />
+						</layoutData>
+						<!-- TOP: growable scroll region -->
+						<ScrollContainer
+							id="chatScroll"
+							vertical="true"
+							width="100%"
+							class="chatContainer chatScrollFlex">
+							<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+							<List
+								id="chatList"
+								items="{path: 'agent>/messages'}"
+								showSeparators="None"
+								backgroundDesign="Transparent"
+								inset="false"
+								growing="true"
+								growingScrollToLoad="true"
+								growingThreshold="30"
+								noDataText="{i18n>chatNoData}"
+								width="100%">
+								<items>
+									<CustomListItem>
+										<HBox
+											class="chatRow"
+											width="100%"
+											justifyContent="{= ${agent>role} === 'user' ? 'End' : 'Start'}"
+											alignItems="Stretch">
+											<VBox
+												renderType="Div"
+												width="auto"
+												class="chatBubble sapUiSmallMargin">
+												<customData>
+													<core:CustomData key="role" value="{agent>role}" writeToDom="true" />
+												</customData>
+												<VBox class="sapUiTinyMargin">
+													<core:HTML
+														visible="{= ${agent>role} === 'agent'}"
+														sanitizeContent="true"
+														content="{path: 'agent>content', formatter: 'formatter.formatMarkdown'}" />
+													<Text
+														visible="{= ${agent>role} !== 'agent'}"
+														text="{agent>content}"
+														wrapping="true" />
+												</VBox>
+											</VBox>
+										</HBox>
+									</CustomListItem>
+								</items>
+							</List>
+							<VBox
+								renderType="Div"
+								class="sapUiSmallMarginTop sapUiTinyMarginBottom"
+								visible="{path: 'agent>/messages', formatter: 'formatter.isLastMessageFromUser'}">
+								<HBox class="chatRow"> 
+								<HBox alignItems="Center" class="sapUiTinyMargin">
+									<BusyIndicator size="1rem" class="sapUiTinyMarginEnd rippleIndicator" />
+									<ObjectStatus
+										class="busyStatusText"
+										text="{= ( ${agent>/currentAction} ? ${agent>/currentAction} : 'Reasoning')}"
+										state="{= ${agent>/status} === 'error' ? 'Error' : ${agent>/status} === 'connected' ? 'Success' : 'Information' }" />
+								</HBox>
+								</HBox>
+							</VBox>
+						</ScrollContainer>
+						<!-- BOTTOM: fixed composer area -->
+						<Toolbar id="chatComposer" design="Transparent" class="chatComposer" height="auto">
+							<Button
+								id="scrollToBottomBtn"
+								type="Transparent"
+								icon="sap-icon://slim-arrow-down"
+								tooltip="Scroll to latest"
+								visible="{ui>/showScrollToBottom}"
+								press=".onScrollToBottom"
+								class="scrollToBottomBtn" />
+							<VBox width="100%">
+								<layoutData>
+									<ToolbarLayoutData shrinkable="false" />
+								</layoutData>
+								<Input
+									id="messageInput"
+									placeholder="{i18n>chatInputPlaceholder}"
+									submit="onSendMessage"
+									showValueHelp="true"
+									valueHelpIconSrc="{
+										parts: [
+											{ path: 'agent>/status' },
+											{ path: 'agent>/messages' }
+										],
+										formatter: 'formatter.getSendIcon'
+									}"
+									valueHelpRequest="onSendMessage"
+									enabled="true"
+									editable="true"
+									class="sapUiTinyMarginBottom"
+									width="100%" />
+								<Label
+									text="AI-generated content may be inaccurate. Verify critical information."
+									wrapping="true"
+									textAlign="Center"
+									class="aiDisclaimer"
+									width="100%" />
+							</VBox>
+						</Toolbar>
+					</VBox>
+				</l:contentAreas>
+			</l:Splitter>
+		</content>
+	</Page>
+</mvc:View>

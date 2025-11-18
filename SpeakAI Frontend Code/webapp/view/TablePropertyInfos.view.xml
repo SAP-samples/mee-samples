@@ -1,0 +1,81 @@
+<mvc:View
+	height="100%"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:p="sap.m.plugins"
+	xmlns:core="sap.ui.core"
+	xmlns:mdc="sap.ui.mdc"
+	xmlns:mdct="sap.ui.mdc.table">
+	<mdc:Table
+		id="speakersTable"
+		header="Speakers"
+		p13nMode="Column,Filter,Sort"
+		sortConditions="{sorters: [{name: 'ratingCompany', descending: true}, {name: 'ratingSeniority', descending: true}, {name: 'year', descending: true}, {name: 'event', descending: true}]}"
+		type="ResponsiveTable"
+		enableAutoColumnWidth="true"
+		delegate="{ name: 'com/sap/aiagentspeaker/delegates/DemoTableDelegate', payload: { bindingPath: 'speakers>/speakers' } }">
+				<mdct:Column
+					id="speakersTableCustomerSpeakerCol"
+					propertyKey="customer_speaker"
+					width="14rem">
+					<ObjectIdentifier
+						title="{= ${speakers>customer}
+							? ${speakers>customer}
+								+ ( ${speakers>eventType}
+									? ( ${speakers>eventType} === 'External Event'
+										? ' 🌐'
+										: ( ${speakers>eventType} === 'Consumption Event'
+											? ' 📊'
+											: ( ${speakers>eventType} === 'Sales Event' ? ' 💼' : '' ) ) )
+									: '' )
+								+ ( ${speakers>partner} ? ' 🤝' : '' )
+								+ ( (${speakers>ratingCompany} === 5 || ${speakers>ratingCompany} === '5')
+									? ' ★'
+									: ( (${speakers>ratingCompany} === 4 || ${speakers>ratingCompany} === '4') ? ' ☆' : '' ) )
+							: '' }"
+						text="{= ${speakers>speakerName}
+							? ${speakers>speakerName}
+								+ ( ${speakers>partnerCospeaker} ? ' + ' + ${speakers>partnerCospeaker} : '' )
+								+ ( (${speakers>ratingSeniority} === 5 || ${speakers>ratingSeniority} === '5')
+									? ' ⬆⬆'
+									: ( (${speakers>ratingSeniority} === 4 || ${speakers>ratingSeniority} === '4') ? ' ⬆' : '' ) )
+							: '' }"
+						tooltip="{= (${speakers>customer} || '')
+							+ ( ${speakers>eventType} ? ' | Type=' + ${speakers>eventType} : '' )
+							+ ( ${speakers>partner} ? ' | Partner=Yes' : '' )
+							+ ( ${speakers>speakerName} ? ' | Speaker=' + ${speakers>speakerName} : '' )
+							+ ( ${speakers>partnerCospeaker} ? ' | Co=' + ${speakers>partnerCospeaker} : '' )
+							+ ( (${speakers>ratingCompany} === 5 || ${speakers>ratingCompany} === '5' || ${speakers>ratingCompany} === 4 || ${speakers>ratingCompany} === '4') ? ' | CompanyRating=' + ${speakers>ratingCompany} : '' )
+							+ ( (${speakers>ratingSeniority} === 5 || ${speakers>ratingSeniority} === '5' || ${speakers>ratingSeniority} === 4 || ${speakers>ratingSeniority} === '4') ? ' | Seniority=' + ${speakers>ratingSeniority} : '' ) }" />
+				</mdct:Column>
+				<mdct:Column
+					id="speakersTableTitleCol"
+					propertyKey="title"
+					header="Session Title"
+					width="14rem">
+					<Text text="{speakers>title}"/>
+				</mdct:Column>
+				<mdct:Column
+					id="speakersTableEventCol"
+					propertyKey="event"
+					header="Event"
+					width="12rem">
+					<Text text="{speakers>event}"/>
+				</mdct:Column>
+				<mdct:Column
+					id="speakersTableYearCol"
+					propertyKey="year"
+					header="Year"
+					width="5rem">
+					<Text text="{speakers>year}"/>
+				</mdct:Column>
+				<!-- <mdct:Column
+					id="speakersTableRatingCompanyCol"
+					propertyKey="ratingCompany"
+					header="Company Rating"
+					width="5rem">
+					<Text text="{speakers>ratingCompany}"/>
+				</mdct:Column>				 -->
+	</mdc:Table>
+</mvc:View>

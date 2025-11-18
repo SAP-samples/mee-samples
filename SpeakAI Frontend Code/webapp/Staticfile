@@ -1,0 +1,13 @@
+# Staticfile for Cloud Foundry staticfile_buildpack
+root: .
+index: index.html
+# Cache static assets moderately; HTML no-cache can be controlled via meta tags
+headers:
+  "**/*.html":
+    Cache-Control: no-cache, no-store, must-revalidate
+  "**/*.js":
+    Cache-Control: public, max-age=600
+  "**/*.css":
+    Cache-Control: public, max-age=600
+  "**/i18n/*.properties":
+    Cache-Control: no-cache

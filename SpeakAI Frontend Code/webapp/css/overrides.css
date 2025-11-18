@@ -1,0 +1,70 @@
+/* UI5-specific overrides and focus/outline handling scoped to chat area */
+
+/* In chat area: hide focus ring on mouse focus, keep it for keyboard */
+.chatContainer .sapMFocusable:focus:not(:focus-visible),
+.chatContainer .sapMLIBFocusable:focus:not(:focus-visible),
+.chatContainer .sapMScrollCont:focus:not(:focus-visible),
+.chatContainer .sapMFlexBox:focus:not(:focus-visible),
+.chatContainer .sapMTB:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove list item border/outline on click/focus inside the chat area */
+.chatContainer .sapMLIB,
+.chatContainer .sapMLIB:focus,
+.chatContainer .sapMLIB:active,
+.chatContainer .sapMLIB.sapMLIBActive,
+.chatContainer .sapMLIB.sapMLIBFocusable:focus,
+.chatContainer .sapMLIB.sapMLIBFocusable:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+/* Kill theme-injected focus/active borders drawn via pseudo-elements */
+.chatContainer .sapMLIB::before,
+.chatContainer .sapMLIB::after,
+.chatContainer .sapMLIB.sapMLIBActive::before,
+.chatContainer .sapMLIB.sapMLIBActive::after,
+.chatContainer .sapMLIB.sapMLIBFocusable:focus::before,
+.chatContainer .sapMLIB.sapMLIBFocusable:focus::after {
+  content: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Input: hide default outlines and shadows across wrapper states */
+.chatComposer .sapMInputBase,
+.chatComposer .sapMInputBase:focus,
+.chatComposer .sapMInputBaseContentWrapper:focus,
+.chatComposer .sapMInputBaseContentWrapper:focus-visible,
+.chatComposer .sapMInputBaseInner:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Single focus ring on the wrapper; hide any blue borders */
+.chatComposer .sapMInputBaseContentWrapper:focus-within {
+  box-shadow: 0 0 0 2px var(--sapAccentColor5);
+  border-radius: 1.25rem;
+  border-color: transparent !important; /* prevent wrapper border turning blue */
+}
+
+/* Remove borders/overlays/background images on input wrappers */
+.chatComposer .sapMInputBaseContentWrapper,
+.chatComposer .sapMInputBaseContentWrapper:hover,
+.chatComposer .sapMInputBaseContentWrapper:active {
+  border: 0 !important;
+  border-bottom: 0 !important;
+  background-image: none !important;
+}
+.chatComposer .sapMInputBaseContentWrapper::before,
+.chatComposer .sapMInputBaseContentWrapper::after,
+.chatComposer .sapMInputBase::before,
+.chatComposer .sapMInputBase::after {
+  content: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: none !important;
+}

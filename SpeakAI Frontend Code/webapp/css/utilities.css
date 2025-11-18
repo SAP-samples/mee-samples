@@ -1,0 +1,8 @@
+/* Small utility classes */
+
+/* Bold only the ObjectStatus text when we add the class on the control */
+.busyStatusText .sapMObjStatusText {
+  font-weight: 800;
+  font-size: 1rem;
+  color: #0064d9;
+}

@@ -1,0 +1,46 @@
+/* Overlay the DynamicSideContent sidebar so it doesn't push main content */
+.sidebarOverlay.sapUiDSC {
+  position: relative;
+}
+.sidebarOverlay .sapUiDSCMain {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+}
+.sidebarOverlay .sapUiDSCSide {
+  position: absolute !important;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 16rem;              /* match the VBox width */
+  max-width: 80vw;
+  z-index: 10;
+  background: var(--sapPage_Background, #fff);
+  box-shadow: 2px 0 12px rgba(0,0,0,0.18);
+}
+/* Keep main content beneath the overlayed sidebar */
+.sidebarOverlay .sapUiDSCMainContent {
+  position: relative;
+  z-index: 0;
+}
+
+/* Generic overlay sidebar that doesn't affect layout flow */
+[id$="--mainPage"] .sapMPageCont {
+  position: relative; /* anchor for absolutely positioned overlay inside Page content */
+}
+.overlaySidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 16rem;              /* must match the width set in XML */
+  max-width: 80vw;
+  z-index: 20;
+  background: var(--sapPage_Background, #fff);
+  box-shadow: 2px 0 12px rgba(0,0,0,0.18);
+  padding: 0.75rem;          /* optional padding for sidebar content */
+}
+
+/* Ensure the chat scroll area remains full-width and not shifted */
+[id$="--chatScroll"] {
+  width: 100% !important;
+}

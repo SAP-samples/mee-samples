@@ -1,0 +1,49 @@
+/* Floating "scroll to bottom" button */
+.scrollToBottomBtn.sapMBtn {
+  display: block;               /* allow auto margins to center */
+  margin: 0 auto 0.5rem;        /* center horizontally */
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;                    /* make it round */
+  border-radius: 999px;
+  background-color: var(--brandPrimary) !important;   /* strong brand color */
+  color: #fff !important;                              /* ensure text/icon inherits white */
+  border: 2px solid rgba(255,255,255,0.9);             /* contrast ring for any background */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);              /* shadow for floating effect */
+}
+.scrollToBottomBtn .sapUiIcon {
+  line-height: 2.5rem;
+  color: #fff !important;                  /* white icon for contrast */
+  font-size: 1.125rem;
+}
+
+/* Hover/active states */
+.scrollToBottomBtn.sapMBtn:hover,
+.scrollToBottomBtn.sapMBtn:focus {
+  background-color: #6f4cff !important;    /* lighter on hover/focus */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.24);
+}
+.scrollToBottomBtn.sapMBtn:active {
+  background-color: #4a2bd9 !important;    /* darker on press */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Kill UI5 inner overlays/background that show a white rectangle on hover */
+.scrollToBottomBtn.sapMBtn .sapMBtnInner,
+.scrollToBottomBtn.sapMBtn:hover .sapMBtnInner,
+.scrollToBottomBtn.sapMBtn:focus .sapMBtnInner,
+.scrollToBottomBtn.sapMBtn:active .sapMBtnInner {
+  background: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 999px !important; /* ensure round inner */
+  padding: 0 !important;           /* no inner padding */
+}
+
+/* Remove pseudo-element overlays */
+.scrollToBottomBtn.sapMBtn .sapMBtnInner::before,
+.scrollToBottomBtn.sapMBtn .sapMBtnInner::after {
+  content: none !important;
+  display: none !important;
+}

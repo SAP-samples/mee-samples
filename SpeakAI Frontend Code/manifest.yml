@@ -1,0 +1,7 @@
+applications:
+  - name: speakai
+    memory: 256M
+    disk_quota: 512M
+    buildpack: staticfile_buildpack
+    path: dist
+    random-route: true

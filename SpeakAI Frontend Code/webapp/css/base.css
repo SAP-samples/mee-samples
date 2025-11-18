@@ -1,0 +1,19 @@
+/* Base globals and variables for the app */
+:root {
+  /* Brand color used across components */
+  --brandPrimary: #5d36ff;
+}
+
+/* Minimum window size constraints (adjust values as needed) */
+html,
+body {
+  min-width: 360px;
+  min-height: 600px;
+}
+
+/* Also constrain the main page container; allow scroll if window smaller */
+[id$="--mainPage"] {
+  min-width: 360px;
+  min-height: 600px;
+  overflow: auto;
+}

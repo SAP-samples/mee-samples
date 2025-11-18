@@ -1,0 +1,112 @@
+{
+	"_version": "1.21.0",
+
+	"sap.app": {
+		"id": "com.sap.aiagentspeaker",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "${version}"
+		},
+		"sourceTemplate": {
+			"id": "generator-ui5-ts-app",
+			"version": "1.1.0"
+		}
+	},
+
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "com.sap.aiagentspeaker.view.App",
+			"type": "XML",
+			"id": "app"
+		},
+
+		"dependencies": {
+			"minUI5Version": "1.141.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {},
+				"sap.ui.integration": {},
+				"sap.ui.mdc": {},
+				"sap.ui.table": {},
+				"sap.ui.export": {},
+				"sap.f": {}
+			}
+		},
+		"resources": {
+			"css": [
+				{ "uri": "css/base.css" },
+				{ "uri": "css/layout.css" },
+				{ "uri": "css/components/chat.css" },
+				{ "uri": "css/components/input.css" },
+				{ "uri": "css/components/topbar.css" },
+				{ "uri": "css/components/button.css" },
+				{ "uri": "css/components/sidebar.css" },
+				{ "uri": "css/overrides.css" },
+				{ "uri": "css/utilities.css" },
+				{ "uri": "css/responsive.css" }
+			]
+		},
+		"config": {"_wsBaseUrl": "http://localhost:8000/api/ws"},
+
+		"handleValidation": true,
+
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "com.sap.aiagentspeaker.i18n.i18n",
+					"supportedLocales": ["en", "de"],
+					"fallbackLocale": "en",
+					"async": true
+				}
+			},
+			"speakers": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "mockdata/speakers.json"
+			}
+		},
+
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"type": "View",
+				"viewType": "XML",
+				"path": "com.sap.aiagentspeaker.view",
+				"controlId": "app",
+				"controlAggregation": "pages"
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "main",
+					"target": "main"
+				}
+			],
+			"targets": {
+				"main": {
+					"id": "main",
+					"name": "Main"
+				}
+			}
+		}
+	}
+}

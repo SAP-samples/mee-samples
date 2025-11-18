@@ -1,0 +1,150 @@
+/* Chat composer and message input area */
+.chatComposer {
+  padding: 1rem 0 1.5rem;
+}
+.chatComposer .sapMToolbar {
+  padding: 0;
+}
+
+/* Toolbar hosting the composer should grow and be visible */
+.chatComposer.sapMTB {
+  height: auto !important;
+  overflow: visible !important;
+  /* Provide horizontal space for input without causing it to overflow Splitter pane */
+  padding: 0.5rem 0.5rem 0.75rem 0.5rem; /* top right bottom left */
+}
+
+/* Input base and wrapper */
+.chatComposer .sapMInputBase {
+  display: block;
+  width: 100%;
+  margin: 0 0 0.5rem 0; /* only bottom margin; horizontal space via toolbar padding */
+  box-sizing: border-box;
+}
+.chatComposer .sapMInputBaseContentWrapper {
+  min-height: 2.75rem;
+  border-radius: 2rem;
+  overflow: hidden;
+}
+.chatComposer .sapMInputBase .sapMInputBaseInner {
+  height: 100%;
+  line-height: 1.4;
+  padding: 0.5rem 3rem 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: inherit;
+  box-sizing: border-box;
+}
+
+/* Standalone chat input specifics */
+.chatInput .sapMInputBaseInner {
+  /* removed unintended margin to avoid layout issues */
+  padding: 1rem 3.25rem 1rem 1.5rem;
+  border-radius: 2rem;
+  border: 1px solid var(--sapField_BorderColor);
+  background-color: var(--sapField_Background);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.chatInput .sapMInputBaseInner:focus {
+  box-shadow: 0 0 0 2px var(--sapContent_FocusColor);
+}
+
+/* Icon container: base appearance and sizing */
+.chatInput .sapMInputBaseIconContainer,
+.chatComposer .sapMInputBase .sapMInputBaseIconContainer {
+  right: 1rem;
+  top: 0;
+  bottom: 0;
+  margin: auto 0.4rem;
+  width: 2rem;   /* was 2.5rem */
+  height: 2rem;  /* was 2.5rem */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  background-color: var(--brandPrimary);
+  color: #fff;
+  border: 0 !important;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+/* Disabled state */
+.chatInput.sapMInputDisabled .sapMInputBaseIconContainer {
+  background: var(--sapButton_Lite_Background);
+  color: var(--sapContent_DisabledTextColor);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.chatInput.sapMInputDisabled .sapMInputBaseInner {
+  background: var(--sapField_ReadOnlyBackground);
+  box-shadow: none;
+}
+
+/* Icon container states (hover/active/focus) */
+/* Note: fixed missing dot in :focus-visible selector for chatComposer */
+.chatInput .sapMInputBaseIconContainer:hover,
+.chatInput .sapMInputBaseIconContainer:active,
+.chatInput .sapMInputBaseIconContainer:focus,
+.chatInput .sapMInputBaseIconContainer:focus-visible,
+.chatComposer .sapMInputBase .sapMInputBaseIconContainer:hover,
+.chatComposer .sapMInputBase .sapMInputBaseIconContainer:active,
+.chatComposer .sapMInputBase .sapMInputBaseIconContainer:focus,
+.chatComposer .sapMInputBase .sapMInputBaseIconContainer:focus-visible {
+  border: 0 !important;
+  outline: none !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  background-color: var(--brandPrimary) !important;
+}
+
+/* Remove any theme pseudo-element overlays */
+.chatInput .sapMInputBaseIconContainer::before,
+.chatInput .sapMInputBaseIconContainer::after,
+.chatComposer .sapMInputBase .sapMInputBaseIconContainer::before,
+.chatComposer .sapMInputBase .sapMInputBaseIconContainer::after {
+  content: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+
+/* Prevent white square on the icon glyph when pressed */
+.chatInput .sapMInputBaseIconContainer .sapUiIcon,
+.chatComposer .sapMInputBase .sapMInputBaseIconContainer .sapUiIcon {
+  color: #fff !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 50% !important;
+}
+
+/* "No outline" variant for input (used in composer) */
+.chatComposer .chatInputNoOutline .sapMInputBaseContentWrapper {
+  overflow: visible;
+}
+.chatComposer .chatInputNoOutline.sapMInputBase {
+  max-width: 100%;
+}
+.chatComposer .chatInputNoOutline.sapMInputBase .sapMInputBaseInner:focus,
+.chatComposer .chatInputNoOutline.sapMInputFocused .sapMInputBaseInner {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Message input width now controlled by layout.css for full chat column width */
+
+/* Disclaimer styling and wrapping under composer */
+.chatComposer .aiDisclaimer.sapMLabel {
+  color: var(--sapContent_LabelColor) !important;
+  font-style: italic;
+  font-weight: normal !important;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  display: block;
+  width: 100%;
+  text-align: center !important;
+  white-space: normal !important;
+  word-break: break-word;
+  padding: 1rem;
+}

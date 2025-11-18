@@ -1,0 +1,20 @@
+{
+  "generator-ui5-ts-app": {
+    "namespace": "com.sap.aiagentspeaker",
+    "framework": "SAPUI5",
+    "frameworkVersion": "1.141.0",
+    "author": "canabdulla",
+    "tstypes": "@sapui5/types",
+    "tstypesVersion": "1.141.0",
+    "appId": "com.sap.aiagentspeaker",
+    "appURI": "com/sap/aiagentspeaker",
+    "cdnDomain": "ui5.sap.com",
+    "defaultTheme": "sap_horizon",
+    "gte1_98_0": true,
+    "gte1_104_0": true,
+    "gte1_115_0": true,
+    "gte1_120_0": true,
+    "lt1_124_0": false,
+    "setupCompleted": true
+  }
+}

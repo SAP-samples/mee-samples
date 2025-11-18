@@ -1,0 +1,26 @@
+/* Responsive adjustments for small screens */
+@media (max-width: 768px) {
+  .chatContainer {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  .chatRow {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  /* Keep small gutters on phones */
+  .chatBubble[data-role="user"] {
+    margin-right: 0.5rem;
+  }
+  .chatBubble[data-role="agent"],
+  .chatBubble[data-role="system"] {
+    margin-left: 0.5rem;
+  }
+
+  [id$="--messageInput"].sapMInputBase {
+    width: 100% !important;
+    margin: 0 0 0.5rem;
+  }
+}
