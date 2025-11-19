@@ -20,6 +20,7 @@
   width: 100%;
   margin: 0 0 0.5rem 0; /* only bottom margin; horizontal space via toolbar padding */
   box-sizing: border-box;
+  height: auto;
 }
 .chatComposer .sapMInputBaseContentWrapper {
   min-height: 2.75rem;
@@ -45,7 +46,19 @@
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 .chatInput .sapMInputBaseInner:focus {
-  box-shadow: 0 0 0 2px var(--sapContent_FocusColor);
+  box-shadow: 0 0 0 20px var(--sapContent_FocusColor);
+}
+
+.sapMInputBaseContentWrapper:not(.sapMInputBaseReadonlyWrapper):not(.sapMInputBaseContentWrapperState) {
+  box-shadow: var(--sapField_Shadow), 0 0 2px #1b90ff29, 0 8px 16px #1b90ff29;
+}
+
+.sapMInputBase:not(.sapMFocus) .sapMInputBaseContentWrapper:not(.sapMInputBaseReadonlyWrapper):not(.sapMInputBaseContentWrapperState):not(.sapMInputBaseDisabledWrapper):hover {
+  box-shadow: var(--sapField_Hover_Shadow), 0 0 2px #1b90ff29, 0 8px 16px #1b90ff29;
+}
+
+.chatComposer .sapMInputBaseContentWrapper:focus-within {
+  box-shadow: 0 0 0 2px var(--sapAccentColor5), 0 0 2px #1b90ff29, 0 8px 16px #1b90ff29 !important;
 }
 
 /* Icon container: base appearance and sizing */
@@ -55,8 +68,8 @@
   top: 0;
   bottom: 0;
   margin: auto 0.4rem;
-  width: 2rem;   /* was 2.5rem */
-  height: 2rem;  /* was 2.5rem */
+  width: 2rem; /* was 2.5rem */
+  height: 2rem; /* was 2.5rem */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -137,14 +150,14 @@
 /* Disclaimer styling and wrapping under composer */
 .chatComposer .aiDisclaimer.sapMLabel {
   color: var(--sapContent_LabelColor) !important;
-  font-style: italic;
+  font-style: normal;
   font-weight: normal !important;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   line-height: 1.3;
   display: block;
   width: 100%;
   text-align: center !important;
   white-space: normal !important;
   word-break: break-word;
-  padding: 1rem;
+  padding: 0.25rem;
 }

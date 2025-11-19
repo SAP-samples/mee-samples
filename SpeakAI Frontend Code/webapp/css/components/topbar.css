@@ -1,15 +1,32 @@
+/* .sapUiSizeCompact .sapMPageHeader .sapMIBar,
+.sapUiSizeCompact .sapMPageFooter .sapMIBar {
+  height: 3rem;
+} */
+
 /* Top application toolbar (App header) */
 .appTopBar.sapMTB {
-  background-color: var(--brandPrimary);
-  color: #fff;
+  /* Classic SAP-style shell header: white background with subtle divider */
+  background-color: #ffffff;
+  color: var(--sapShellColor, #354a5f);
   box-shadow: none;
   border: 0;
-}
-.appTopBar .sapMTitle {
-  color: #fff;
+  border-bottom: 1px solid var(--sapList_BorderColor, #d9d9d9) !important;
+  padding-inline: 0.75rem;
 }
 
-/* Topbar sidebar ToggleButton - force white icon and remove default overlays */
+/* Logo + title block */
+.appTopBarLogo {
+  height: 1.75rem;
+  margin-inline-start: 0.25rem;
+  margin-inline-end: 0.75rem;
+}
+
+.appTopBarTitle.sapMTitle {
+  color: var(--sapShell_SubBrand_TextColor);
+  font-weight: 400;
+}
+
+/* Topbar sidebar ToggleButton - remove background overlays and use SAP blue icon */
 .appTopBar [id$="--sidebarToggleBtn"].sapMBtn .sapMBtnInner,
 .appTopBar [id$="--sidebarToggleBtn"].sapMBtn:hover .sapMBtnInner,
 .appTopBar [id$="--sidebarToggleBtn"].sapMBtn:focus .sapMBtnInner,
@@ -21,9 +38,32 @@
   box-shadow: none !important;
   outline: none !important;
 }
+
 .appTopBar [id$="--sidebarToggleBtn"] .sapUiIcon {
-  color: #fff !important;
+  color: #131e29 !important;
   background: transparent !important;
+}
+
+/* Compact message strip inside header (connection status) */
+.appTopBarMessage.sapMMsgStrip {
+  max-width: 22rem;
+  background-color: transparent;
+  border: 0;
+  padding-inline: 0.5rem 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  height: 2rem;
+}
+
+.appTopBarMessage .sapMMsgStripIcon {
+  font-size: 1rem;
+  margin-right: 0.25rem;
+}
+
+.appTopBarMessage .sapMMsgStripText {
+  font-size: 0.75rem;
+  line-height: 1.2;
 }
 
 /* Subheader: remove dividers and add space above content */
@@ -31,13 +71,6 @@
   box-shadow: none;
   border: 0;
   padding-top: 0.5rem;
-}
-
-/* Remove lines between header, subheader, and content for this page */
-[id$="--mainPage"] .sapMPageHeader,
-[id$="--mainPage"] .sapMPageSubHeader {
-  box-shadow: none !important;
-  border: 0 !important;
 }
 
 /* Small, centered subheader date/time */

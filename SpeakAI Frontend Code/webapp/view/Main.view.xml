@@ -1,35 +1,23 @@
-<mvc:View
-	controllerName="com.sap.aiagentspeaker.controller.Main"
-	displayBlock="true"
+<mvc:View controllerName="com.sap.aiagentspeaker.controller.Main" displayBlock="true"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
-	xmlns:l="sap.ui.layout"
-	core:require="{
+	xmlns:l="sap.ui.layout" core:require="{
 		formatter: 'com/sap/aiagentspeaker/model/formatter'
 	}">
 	<Page id="mainPage" title="{i18n>title}" class="sapUiSizeCompact" enableScrolling="false">
 		<customHeader>
 			<Toolbar class="appTopBar">
-			    <ToggleButton
-					id="sidebarToggleBtn"
-					press=".onToggleSidebar"
-					icon="sap-icon://menu2"
-					tooltip="Toggle sidebar"
-					type="Transparent"
-					pressed="{ui>/sidebarOpen}" />
-				<Title text="{i18n>title}" level="H2" />
+				<ToggleButton id="sidebarToggleBtn" press=".onToggleSidebar" icon="sap-icon://menu2" tooltip="Toggle sidebar" type="Transparent" pressed="{ui>/sidebarOpen}" />
+				<Image src="img/SAP_logo.svg" alt="SAP" densityAware="false" decorative="false" class="appTopBarLogo" />
+				<Title text="{i18n>title}" level="H2" class="appTopBarTitle" />
 				<!-- <ToolbarSpacer />
 				<HBox class="subHeaderText" alignItems="Center" justifyContent="Center">
 					<Text class="subHeaderDate" text="{ui>/dateLabel}" />
 					<Text class="subHeaderTime" text="{ui>/timeLabel}" />
 				</HBox> -->
 				<ToolbarSpacer />
-				<MessageStrip
-					text="{= 'Connection: ' + ${agent>/status} }"
-					type="{= ${agent>/status} === 'connected' ? 'Success' : (${agent>/status} === 'error' || ${agent>/status} === 'disconnected' ? 'Error' : 'Information') }"
-					showIcon="true"
-					showCloseButton="false" />
+				<MessageStrip text="{= 'Connection: ' + ${agent>/status} }" type="{= ${agent>/status} === 'connected' ? 'Success' : (${agent>/status} === 'error' || ${agent>/status} === 'disconnected' ? 'Error' : 'Information') }" showIcon="true" showCloseButton="false" class="appTopBarMessage" />
 			</Toolbar>
 		</customHeader>
 
@@ -49,7 +37,7 @@
 				<l:contentAreas>
 					<VBox id="speakersTableContainer" height="100%" renderType="Div" class="speakersTableContainer">
 						<layoutData>
-							<l:SplitterLayoutData size="40%" minSize="320" resizable="true" />
+							<l:SplitterLayoutData size="40%" minSize="814" resizable="true" />
 						</layoutData>
 						<!-- Provide a stable ID for the nested view so that inner controls (e.g. speakersTable) get a stable global ID for flexibility -->
 						<mvc:XMLView id="tablePropInfosView" viewName="com.sap.aiagentspeaker.view.TablePropertyInfos" />
@@ -58,107 +46,73 @@
 						<layoutData>
 							<l:SplitterLayoutData size="60%" minSize="300" resizable="true" />
 						</layoutData>
-						<!-- TOP: growable scroll region -->
-						<ScrollContainer
-							id="chatScroll"
-							vertical="true"
-							width="100%"
-							class="chatContainer chatScrollFlex">
+						<!-- TOP: growable splash or chat region -->
+						<VBox id="chatSplash" renderType="Div" visible="{ui>/showSplash}" class="chatSplash">
 							<layoutData>
 								<FlexItemData growFactor="1" />
 							</layoutData>
-							<List
-								id="chatList"
-								items="{path: 'agent>/messages'}"
-								showSeparators="None"
-								backgroundDesign="Transparent"
-								inset="false"
-								growing="true"
-								growingScrollToLoad="true"
-								growingThreshold="30"
-								noDataText="{i18n>chatNoData}"
-								width="100%">
+							<VBox renderType="Div" class="chatSplashHero" alignItems="Center" justifyContent="Center">
+								<core:Icon src="sap-icon://ai" class="chatSplashHeroIcon" />
+								<VBox renderType="Div" class="chatSplashCopy">
+									<Text class="chatSplashHeadline" text="{i18n>chatSplashHeadline}" />
+									<Text class="chatSplashSub" text="{i18n>chatSplashSub}" />
+								</VBox>
+							</VBox>
+							<VBox renderType="Div" class="chatSplashActions">
+								<HBox renderType="Div" class="chatSplashQuickActions">
+									<Button text="{i18n>chatSplashQa1}" type="Transparent" press=".onQuickAsk1" />
+									<Button text="{i18n>chatSplashQa2}" type="Transparent" press=".onQuickAsk2" />
+									<Button text="{i18n>chatSplashQa3}" type="Transparent" press=".onQuickAsk3" />
+									<Button text="{i18n>chatSplashQa4}" type="Transparent" press=".onQuickAsk4" />
+									<Button text="{i18n>chatSplashQa5}" type="Transparent" press=".onQuickAsk5" />
+								</HBox>
+							</VBox>
+						</VBox>
+						<ScrollContainer id="chatScroll" vertical="true" width="100%" class="chatContainer chatScrollFlex" visible="{= !${ui>/showSplash} }">
+							<layoutData>
+								<FlexItemData growFactor="1" />
+							</layoutData>
+							<List id="chatList" items="{path: 'agent>/messages'}" showSeparators="None" backgroundDesign="Transparent" inset="false" growing="true" growingScrollToLoad="true" growingThreshold="30" noDataText="{i18n>chatNoData}" width="100%">
 								<items>
 									<CustomListItem>
-										<HBox
-											class="chatRow"
-											width="100%"
-											justifyContent="{= ${agent>role} === 'user' ? 'End' : 'Start'}"
-											alignItems="Stretch">
-											<VBox
-												renderType="Div"
-												width="auto"
-												class="chatBubble sapUiSmallMargin">
+										<HBox class="chatRow" width="100%" justifyContent="{= ${agent>role} === 'user' ? 'End' : 'Start'}" alignItems="Stretch">
+											<VBox renderType="Div" width="auto" class="chatBubble sapUiSmallMargin">
 												<customData>
 													<core:CustomData key="role" value="{agent>role}" writeToDom="true" />
 												</customData>
 												<VBox class="sapUiTinyMargin">
-													<core:HTML
-														visible="{= ${agent>role} === 'agent'}"
-														sanitizeContent="true"
-														content="{path: 'agent>content', formatter: 'formatter.formatMarkdown'}" />
-													<Text
-														visible="{= ${agent>role} !== 'agent'}"
-														text="{agent>content}"
-														wrapping="true" />
+													<core:HTML visible="{= ${agent>role} === 'agent'}" sanitizeContent="true" content="{path: 'agent>content', formatter: 'formatter.formatMarkdown'}" />
+													<Text visible="{= ${agent>role} !== 'agent'}" text="{agent>content}" wrapping="true" />
 												</VBox>
 											</VBox>
 										</HBox>
 									</CustomListItem>
 								</items>
 							</List>
-							<VBox
-								renderType="Div"
-								class="sapUiSmallMarginTop sapUiTinyMarginBottom"
-								visible="{path: 'agent>/messages', formatter: 'formatter.isLastMessageFromUser'}">
-								<HBox class="chatRow"> 
-								<HBox alignItems="Center" class="sapUiTinyMargin">
-									<BusyIndicator size="1rem" class="sapUiTinyMarginEnd rippleIndicator" />
-									<ObjectStatus
-										class="busyStatusText"
-										text="{= ( ${agent>/currentAction} ? ${agent>/currentAction} : 'Reasoning')}"
-										state="{= ${agent>/status} === 'error' ? 'Error' : ${agent>/status} === 'connected' ? 'Success' : 'Information' }" />
-								</HBox>
+							<VBox renderType="Div" class="sapUiSmallMarginTop sapUiTinyMarginBottom" visible="{path: 'agent>/messages', formatter: 'formatter.isLastMessageFromUser'}">
+								<HBox class="chatRow">
+									<HBox alignItems="Center" class="sapUiTinyMargin">
+										<BusyIndicator size="1rem" class="sapUiTinyMarginEnd rippleIndicator" />
+										<ObjectStatus class="busyStatusText" text="{= ( ${agent>/currentAction} ? ${agent>/currentAction} : 'Reasoning')}" state="{= ${agent>/status} === 'error' ? 'Error' : ${agent>/status} === 'connected' ? 'Success' : 'Information' }" />
+									</HBox>
 								</HBox>
 							</VBox>
 						</ScrollContainer>
 						<!-- BOTTOM: fixed composer area -->
 						<Toolbar id="chatComposer" design="Transparent" class="chatComposer" height="auto">
-							<Button
-								id="scrollToBottomBtn"
-								type="Transparent"
-								icon="sap-icon://slim-arrow-down"
-								tooltip="Scroll to latest"
-								visible="{ui>/showScrollToBottom}"
-								press=".onScrollToBottom"
-								class="scrollToBottomBtn" />
+							<Button id="scrollToBottomBtn" type="Transparent" icon="sap-icon://slim-arrow-down" tooltip="Scroll to latest" visible="{ui>/showScrollToBottom}" press=".onScrollToBottom" class="scrollToBottomBtn" />
 							<VBox width="100%">
 								<layoutData>
 									<ToolbarLayoutData shrinkable="false" />
 								</layoutData>
-								<Input
-									id="messageInput"
-									placeholder="{i18n>chatInputPlaceholder}"
-									submit="onSendMessage"
-									showValueHelp="true"
-									valueHelpIconSrc="{
+								<Input id="messageInput" placeholder="{i18n>chatInputPlaceholder}" submit="onSendMessage" showValueHelp="true" valueHelpIconSrc="{
 										parts: [
 											{ path: 'agent>/status' },
 											{ path: 'agent>/messages' }
 										],
 										formatter: 'formatter.getSendIcon'
-									}"
-									valueHelpRequest="onSendMessage"
-									enabled="true"
-									editable="true"
-									class="sapUiTinyMarginBottom"
-									width="100%" />
-								<Label
-									text="AI-generated content may be inaccurate. Verify critical information."
-									wrapping="true"
-									textAlign="Center"
-									class="aiDisclaimer"
-									width="100%" />
+									}" valueHelpRequest="onSendMessage" enabled="true" editable="true" class="sapUiTinyMarginBottom" width="100%" />
+								<Label text="Powered by AI. Verify results." wrapping="true" textAlign="Center" class="aiDisclaimer" width="100%" />
 							</VBox>
 						</Toolbar>
 					</VBox>

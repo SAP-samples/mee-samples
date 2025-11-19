@@ -1,80 +1,115 @@
-<mvc:View
-	height="100%"
-	displayBlock="true"
+<mvc:View height="100%" displayBlock="true"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:p="sap.m.plugins"
 	xmlns:core="sap.ui.core"
 	xmlns:mdc="sap.ui.mdc"
-	xmlns:mdct="sap.ui.mdc.table">
-	<mdc:Table
-		id="speakersTable"
-		header="Speakers"
-		p13nMode="Column,Filter,Sort"
-		sortConditions="{sorters: [{name: 'ratingCompany', descending: true}, {name: 'ratingSeniority', descending: true}, {name: 'year', descending: true}, {name: 'event', descending: true}]}"
-		type="ResponsiveTable"
-		enableAutoColumnWidth="true"
-		delegate="{ name: 'com/sap/aiagentspeaker/delegates/DemoTableDelegate', payload: { bindingPath: 'speakers>/speakers' } }">
-				<mdct:Column
-					id="speakersTableCustomerSpeakerCol"
-					propertyKey="customer_speaker"
-					width="14rem">
-					<ObjectIdentifier
-						title="{= ${speakers>customer}
-							? ${speakers>customer}
-								+ ( ${speakers>eventType}
-									? ( ${speakers>eventType} === 'External Event'
-										? ' 🌐'
-										: ( ${speakers>eventType} === 'Consumption Event'
-											? ' 📊'
-											: ( ${speakers>eventType} === 'Sales Event' ? ' 💼' : '' ) ) )
-									: '' )
-								+ ( ${speakers>partner} ? ' 🤝' : '' )
-								+ ( (${speakers>ratingCompany} === 5 || ${speakers>ratingCompany} === '5')
-									? ' ★'
-									: ( (${speakers>ratingCompany} === 4 || ${speakers>ratingCompany} === '4') ? ' ☆' : '' ) )
-							: '' }"
-						text="{= ${speakers>speakerName}
+	xmlns:mdct="sap.ui.mdc.table" core:require="{
+		formatter: 'com/sap/aiagentspeaker/model/formatter'
+	}">
+	<mdc:Table id="speakersTable" header="Speakers" p13nMode="Column,Filter,Sort" sortConditions="{sorters: [{name: 'ratingCompany', descending: true}, {name: 'ratingSeniority', descending: true}, {name: 'year', descending: true}, {name: 'event', descending: true}]}" type="ResponsiveTable" enableAutoColumnWidth="true" delegate="{ name: 'com/sap/aiagentspeaker/delegates/DemoTableDelegate', payload: { bindingPath: 'speakers>/speakers' } }">
+		<!-- Customer-focused column -->
+		<mdct:Column id="speakersTableCustomerCol" propertyKey="customer" header="Customer" width="8rem">
+			<VBox renderType="Bare">
+				<items>
+					<ObjectIdentifier title="{speakers>customer}" />
+					<!-- Partner flag directly under customer name -->
+					<HBox renderType="Bare" alignItems="Center" class="sapUiTinyMarginTop">
+						<items>
+							<ObjectStatus visible="{= !!${speakers>partner} }" text="(Partner)" state="Success" />
+						</items>
+					</HBox>
+					<!-- Company rating -->
+					<HBox renderType="Bare" alignItems="Center" class="sapUiTinyMarginTop">
+						<items>
+							<RatingIndicator visible="{= !!${speakers>ratingCompany} }" value="{speakers>ratingCompany}" maxValue="5" iconSize="1rem" enabled="false" tooltip="{= ${speakers>ratingCompany} ? 'Company rating: ' + ${speakers>ratingCompany} + ' / 5' : '' }" />
+						</items>
+					</HBox>
+				</items>
+			</VBox>
+		</mdct:Column>
+
+		<!-- Speaker-focused column -->
+		<mdct:Column id="speakersTableSpeakerCol" propertyKey="speakerName" header="Speaker" width="10rem">
+			<VBox renderType="Bare">
+				<items>
+					<ObjectIdentifier title="{= ${speakers>speakerName}
 							? ${speakers>speakerName}
 								+ ( ${speakers>partnerCospeaker} ? ' + ' + ${speakers>partnerCospeaker} : '' )
-								+ ( (${speakers>ratingSeniority} === 5 || ${speakers>ratingSeniority} === '5')
-									? ' ⬆⬆'
-									: ( (${speakers>ratingSeniority} === 4 || ${speakers>ratingSeniority} === '4') ? ' ⬆' : '' ) )
-							: '' }"
-						tooltip="{= (${speakers>customer} || '')
-							+ ( ${speakers>eventType} ? ' | Type=' + ${speakers>eventType} : '' )
-							+ ( ${speakers>partner} ? ' | Partner=Yes' : '' )
-							+ ( ${speakers>speakerName} ? ' | Speaker=' + ${speakers>speakerName} : '' )
-							+ ( ${speakers>partnerCospeaker} ? ' | Co=' + ${speakers>partnerCospeaker} : '' )
-							+ ( (${speakers>ratingCompany} === 5 || ${speakers>ratingCompany} === '5' || ${speakers>ratingCompany} === 4 || ${speakers>ratingCompany} === '4') ? ' | CompanyRating=' + ${speakers>ratingCompany} : '' )
-							+ ( (${speakers>ratingSeniority} === 5 || ${speakers>ratingSeniority} === '5' || ${speakers>ratingSeniority} === 4 || ${speakers>ratingSeniority} === '4') ? ' | Seniority=' + ${speakers>ratingSeniority} : '' ) }" />
-				</mdct:Column>
-				<mdct:Column
-					id="speakersTableTitleCol"
-					propertyKey="title"
-					header="Session Title"
-					width="14rem">
-					<Text text="{speakers>title}"/>
-				</mdct:Column>
-				<mdct:Column
-					id="speakersTableEventCol"
-					propertyKey="event"
-					header="Event"
-					width="12rem">
-					<Text text="{speakers>event}"/>
-				</mdct:Column>
-				<mdct:Column
-					id="speakersTableYearCol"
-					propertyKey="year"
-					header="Year"
-					width="5rem">
-					<Text text="{speakers>year}"/>
-				</mdct:Column>
-				<!-- <mdct:Column
-					id="speakersTableRatingCompanyCol"
-					propertyKey="ratingCompany"
-					header="Company Rating"
-					width="5rem">
+							: '' }" />
+					<!-- Speaker role / title -->
+					<HBox renderType="Bare" alignItems="Center" class="sapUiTinyMarginTop">
+						<items>
+							<Text text="{speakers>speakerTitleRole}" visible="{= !!${speakers>speakerTitleRole} }" />
+						</items>
+					</HBox>
+
+					<!-- Speaker seniority rating (stars only) -->
+					<HBox renderType="Bare" alignItems="Center" class="sapUiTinyMarginTop">
+						<items>
+							<RatingIndicator visible="{= !!${speakers>ratingSeniority} }" value="{speakers>ratingSeniority}" maxValue="5" iconSize="1rem" enabled="false" tooltip="{= ${speakers>ratingSeniority} ? 'Speaker seniority rating: ' + ${speakers>ratingSeniority} + ' / 5' : '' }" />
+						</items>
+					</HBox>
+				</items>
+			</VBox>
+		</mdct:Column>
+
+		<mdct:Column id="speakersTableTitleCol" propertyKey="title" header="Session Title" width="14rem">
+			<VBox renderType="Bare">
+				<items>
+					<Text text="{speakers>title}" design="Bold" />
+
+					<!-- Session context: solution, topic, audience -->
+					<HBox renderType="Bare" alignItems="Center" class="sapUiTinyMarginTop">
+						<items>
+							<Label text="Solution:" class="sapUiTinyMarginEnd" visible="{= !!${speakers>solutionArea} }" />
+							<Text text="{path: 'speakers>solutionArea', formatter: 'formatter.formatArrayish'}" visible="{= !!${speakers>solutionArea} }" />
+						</items>
+					</HBox>
+					<HBox renderType="Bare" alignItems="Center" class="sapUiTinyMarginTop">
+						<items>
+							<Label text="Topic:" class="sapUiTinyMarginEnd" visible="{= !!${speakers>topic} }" />
+							<Text text="{path: 'speakers>topic', formatter: 'formatter.formatArrayish'}" visible="{= !!${speakers>topic} }" />
+						</items>
+					</HBox>
+					<HBox renderType="Bare" alignItems="Center" class="sapUiTinyMarginTop">
+						<items>
+							<Label text="Audience:" class="sapUiTinyMarginEnd" visible="{= !!${speakers>audience} }" />
+							<Text text="{path: 'speakers>audience', formatter: 'formatter.formatArrayish'}" visible="{= !!${speakers>audience} }" />
+						</items>
+					</HBox>
+				</items>
+			</VBox>
+		</mdct:Column>
+		<mdct:Column id="speakersTableEventCol" propertyKey="event" header="Event" width="11rem">
+			<VBox renderType="Bare">
+				<items>
+					<Link text="{speakers>event}" wrapping="true" target="_blank" emphasized="true" visible="{= !!${speakers>eventHomepage} }" href="{
+							path: 'speakers>eventHomepage',
+							formatter: 'formatter.normalizeUrl'
+						}" />
+					<Text text="{speakers>event}" design="Bold" visible="{= !${speakers>eventHomepage} }" />
+					<!-- Event type -->
+					<HBox renderType="Bare" alignItems="Center" class="sapUiTinyMarginTop">
+						<items>
+							<Label text="Type:" class="sapUiTinyMarginEnd" visible="{= !!${speakers>eventType} }" />
+							<core:Icon visible="{= !!${speakers>eventType} }" src="{path: 'speakers>eventType', formatter: 'formatter.eventTypeIcon'}" class="sapUiTinyMarginEnd" />
+							<Text text="{path: 'speakers>eventType', formatter: 'formatter.eventTypeText'}" visible="{= !!${speakers>eventType} }" />
+						</items>
+					</HBox>
+					<!-- Event rating -->
+					<HBox renderType="Bare" alignItems="Center" class="sapUiTinyMarginTop">
+						<items>
+							<RatingIndicator visible="{= !!${speakers>ratingEvent} }" value="{speakers>ratingEvent}" maxValue="5" iconSize="1rem" enabled="false" tooltip="{= ${speakers>ratingEvent} ? 'Event rating: ' + ${speakers>ratingEvent} + ' / 5' : '' }" />
+						</items>
+					</HBox>
+				</items>
+			</VBox>
+		</mdct:Column>
+		<mdct:Column id="speakersTableYearCol" propertyKey="year" header="Year" width="5rem">
+			<Text text="{speakers>year}"/>
+		</mdct:Column>
+		<!-- <mdct:Column id="speakersTableRatingCompanyCol" propertyKey="ratingCompany" header="Company Rating" width="5rem">
 					<Text text="{speakers>ratingCompany}"/>
 				</mdct:Column>				 -->
 	</mdc:Table>

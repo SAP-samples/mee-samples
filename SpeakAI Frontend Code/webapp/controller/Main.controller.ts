@@ -83,6 +83,7 @@ export default class Main extends BaseController {
 
         // Update scroll button visibility after new message (post-render)
         setTimeout(() => this._updateScrollToBottomVisibility(), 0);
+        this._updateSplashVisibility();
 
         if (message.type === "error") {
             this.agentModel.setProperty("/status", "error");
@@ -121,6 +122,7 @@ export default class Main extends BaseController {
 
         // Initial visibility check (post initial render)
         setTimeout(() => this._updateScrollToBottomVisibility(), 0);
+        this._updateSplashVisibility();
 
         // Attach semantic enrichment AFTER table subview is loaded
         const semanticDebug = /[?&]semanticDebug=true/i.test(location.search) || (window as any).__SEMANTIC_DEBUG__;
@@ -248,6 +250,7 @@ export default class Main extends BaseController {
 
         // Re-evaluate after DOM updates
         setTimeout(() => this._updateScrollToBottomVisibility(), 0);
+        this._updateSplashVisibility();
     }
 
     public onChatScroll(): void {
@@ -321,6 +324,15 @@ export default class Main extends BaseController {
         const sc = this._getScrollContainer();
         const ui = (this.getOwnerComponent() as Component).getModel("ui") as JSONModel;
         ui.setProperty("/showScrollToBottom", !this._isAtBottom(sc));
+    }
+
+    // Show splash until the first real user message is present in the conversation
+    private _updateSplashVisibility(): void {
+        const component = this.getOwnerComponent() as Component;
+        const ui = component.getModel("ui") as JSONModel;
+        const messages = (this.agentModel.getProperty("/messages") as ChatMessage[]) ?? [];
+        const hasUser = messages.some((m) => m.role === "user");
+        ui.setProperty("/showSplash", !hasUser);
     }
 
     // Bind native scroll and window resize to keep visibility in sync even if ScrollContainer event doesn't fire
@@ -458,6 +470,41 @@ export default class Main extends BaseController {
         this._scrollElem = undefined;
         this._boundNativeScroll = undefined;
         this._boundResize = undefined;
+    }
+
+    private async _quickAsk(textKey: string): Promise<void> {
+        const input = this.byId("messageInput") as Input;
+        if (!input) {
+            return;
+        }
+        const rb = await this.getResourceBundle();
+        const text = rb.getText(textKey);
+        input.setValue(text);
+        await this.onSendMessage();
+        this._updateSplashVisibility();
+        setTimeout(() => {
+            input.focus();
+        }, 0);
+    }
+
+    public onQuickAsk1(): void {
+        void this._quickAsk("chatSplashQa1");
+    }
+
+    public onQuickAsk2(): void {
+        void this._quickAsk("chatSplashQa2");
+    }
+
+    public onQuickAsk3(): void {
+        void this._quickAsk("chatSplashQa3");
+    }
+
+    public onQuickAsk4(): void {
+        void this._quickAsk("chatSplashQa4");
+    }
+
+    public onQuickAsk5(): void {
+        void this._quickAsk("chatSplashQa5");
     }
 
     private _uuid(): string {

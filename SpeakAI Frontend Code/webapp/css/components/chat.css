@@ -4,7 +4,7 @@
   padding: 0.25rem;
   border-radius: 1.25rem;
   /* background-color: rgb(255, 255, 255); */
-  background-color:#e3e3e3; 
+  background-color: #e3e3e3;
   display: inline-flex;
   flex-direction: column;
   gap: 0.2rem;
@@ -36,7 +36,7 @@
   padding: 0rem !important;
   color: var(--sapTextColor);
   margin-right: auto;
-  margin-left: 0.75rem;  /* space on the left */
+  margin-left: 0.75rem; /* space on the left */
 }
 
 /* Increase font size for agent bubbles only */
@@ -122,7 +122,6 @@
   --chat-table-border-color: white;
 }
 
-
 .chatBubble th,
 .chatBubble td {
   border: 1px solid var(--chat-table-border-color);
@@ -143,7 +142,11 @@
 }
 
 /* Minimal composer styling (layout handled in controller) */
-.chatComposer { background: var(--sapGroup_ContentBackground); border-top: 1px solid var(--sapList_BorderColor, #d9d9d9); padding: 0.25rem 0.5rem 0.75rem; position: relative; }
+.chatComposer {
+  background: var(--sapBaseColor, #ffffff) !important;
+  padding: 0.25rem 0.5rem 0.75rem;
+  position: relative;
+}
 
 /* Make scroll-to-bottom button not affect layout height */
 .chatComposer .scrollToBottomBtn {
@@ -153,26 +156,114 @@
   /* Place it so it hovers above the input and overlaps den ScrollContainer leicht */
   bottom: calc(100% - 0.5rem); /* extend upwards out of composer */
   z-index: 5;
-  background: var(--sapButton_Lite_Background,#fff);
-  border: 1px solid var(--sapList_BorderColor,#ccc);
+  background: var(--sapButton_Lite_Background, #fff);
+  border: 1px solid var(--sapList_BorderColor, #ccc);
   border-radius: 1.25rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   padding: 0.15rem 0.4rem;
 }
 
 .chatComposer .scrollToBottomBtn:hover {
-  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
 
 /* Enlarge scrollbar only inside chat scroll container */
+.chatContainer.chatScrollFlex {
+  padding: 0 0.5rem 0 0.5rem;
+}
+
 #chatScroll .sapMScrollCont {
   scrollbar-width: auto; /* Firefox */
 }
-#chatScroll .sapMScrollCont::-webkit-scrollbar { width: 14px; }
-#chatScroll .sapMScrollCont::-webkit-scrollbar-track { background: transparent; }
+#chatScroll .sapMScrollCont::-webkit-scrollbar {
+  width: 14px;
+}
+#chatScroll .sapMScrollCont::-webkit-scrollbar-track {
+  background: transparent;
+}
 #chatScroll .sapMScrollCont::-webkit-scrollbar-thumb {
   background: var(--sapScrollBar_FaceColor, #9a9a9a);
   border-radius: 8px;
   border: 3px solid var(--sapGroup_ContentBackground, #fff);
 }
-#chatScroll .sapMScrollCont::-webkit-scrollbar-thumb:hover { background: var(--sapScrollBar_FaceColor, #7d7d7d); }
+#chatScroll .sapMScrollCont::-webkit-scrollbar-thumb:hover {
+  background: var(--sapScrollBar_FaceColor, #7d7d7d);
+}
+
+/* === Chat landing / splash section === */
+.chatSplash {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: none;
+  height: 100%;
+}
+
+.chatSplashHero {
+  position: relative;
+  padding: 2.5rem 1.5rem 3.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #1e3a8a 55%, #0f172a 100%);
+  color: #ffffff;
+  flex: 1 1 auto;
+}
+
+.chatSplashHeroIcon {
+  font-size: 8rem;
+  color: #ffffff;
+}
+
+.chatSplashCopy {
+  position: absolute;
+  left: 2.5rem;
+  bottom: 2.5rem;
+  margin-top: 0;
+  text-align: left;
+  max-width: 32rem;
+}
+
+.chatSplashHeadline {
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: #ffffff;
+}
+
+.chatSplashSub {
+  margin-top: 0.25rem;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: #ffffff;
+}
+
+.chatSplashActions {
+  padding: 0.75rem 1rem 1.75rem;
+  background: var(--sapBaseColor, #ffffff);
+  border-top: 1px solid var(--sapList_BorderColor, #d9d9d9);
+}
+
+.chatSplashQuickActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.chatSplashQuickActions .sapMBtn {
+  border-radius: 999px;
+}
+
+.chatSplashQuickActions .sapMBtnInner {
+  border-radius: 999px;
+  box-shadow: 0 0 2px rgba(27, 144, 255, 0.16), 0 4px 8px rgba(27, 144, 255, 0.16);
+}
+
+@media (max-width: 900px) {
+  .chatSplash {
+    margin: 0;
+  }
+}
