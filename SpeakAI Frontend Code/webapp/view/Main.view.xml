@@ -46,7 +46,7 @@
 					</VBox>
 					<VBox id="chatArea" height="100%" renderType="Div" class="chatArea">
 						<layoutData>
-							<l:SplitterLayoutData size="47%" minSize="300" resizable="true" />
+							<l:SplitterLayoutData size="48%" minSize="300" resizable="true" />
 						</layoutData>
 						<!-- TOP: growable splash or chat region -->
 						<VBox id="chatSplash" renderType="Div" visible="{ui>/showSplash}" class="chatSplash">
