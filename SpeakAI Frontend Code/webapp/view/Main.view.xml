@@ -37,14 +37,16 @@
 				<l:contentAreas>
 					<VBox id="speakersTableContainer" height="100%" renderType="Div" class="speakersTableContainer">
 						<layoutData>
-							<l:SplitterLayoutData size="40%" minSize="814" resizable="true" />
+							<!-- Allow the speakers table pane to shrink on smaller window widths.
+							     Keep minSize in sync with MIN_WIDTH in _initTablePaneWidth (Main.controller.ts). -->
+							<l:SplitterLayoutData size="53%" minSize="320" resizable="true" />
 						</layoutData>
 						<!-- Provide a stable ID for the nested view so that inner controls (e.g. speakersTable) get a stable global ID for flexibility -->
 						<mvc:XMLView id="tablePropInfosView" viewName="com.sap.aiagentspeaker.view.TablePropertyInfos" />
 					</VBox>
 					<VBox id="chatArea" height="100%" renderType="Div" class="chatArea">
 						<layoutData>
-							<l:SplitterLayoutData size="60%" minSize="300" resizable="true" />
+							<l:SplitterLayoutData size="47%" minSize="300" resizable="true" />
 						</layoutData>
 						<!-- TOP: growable splash or chat region -->
 						<VBox id="chatSplash" renderType="Div" visible="{ui>/showSplash}" class="chatSplash">

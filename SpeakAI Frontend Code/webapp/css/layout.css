@@ -16,12 +16,14 @@
 }
 
 #speakersTableContainer .sapMTitle,
-#speakersTableContainer .sapMText { line-height: 1.2; }
+#speakersTableContainer .sapMText {
+  line-height: 1.2;
+}
 
 /* (deprecated) #chatScroll rules replaced by .chatArea/.chatScrollFlex in components/chat.css */
 
 /* Chat composer input: add small horizontal breathing space; adjust width to account for margins */
-#mainPage .chatComposer .sapMInputBase { 
+#mainPage .chatComposer .sapMInputBase {
   /* width handled here; margin now defined in input.css (later in load order) */
   width: 100% !important;
   box-sizing: border-box;
@@ -29,21 +31,35 @@
 /* Horizontal spacing configured in components/input.css to ensure it is not overridden later */
 
 /* Avoid table squeezing inner cells */
-#speakersTable { width: 100%; }
+#speakersTable {
+  width: 100%;
+}
 
 /* Adjust breakpoints for grid */
 @media (max-width: 1400px) {
-  #contentSplit { grid-template-columns: 58% 42%; }
+  #contentSplit {
+    grid-template-columns: 58% 42%;
+  }
 }
 @media (max-width: 1200px) {
-  #contentSplit { grid-template-columns: 54% 46%; }
+  #contentSplit {
+    grid-template-columns: 54% 46%;
+  }
 }
 @media (max-width: 1100px) {
-  #contentSplit { grid-template-columns: 50% 50%; }
+  #contentSplit {
+    grid-template-columns: 50% 50%;
+  }
 }
 @media (max-width: 900px) {
-  #contentSplit { grid-template-columns: 100%; grid-auto-rows: auto auto; }
-  #speakersTableContainer { border-right: none; border-bottom: 1px solid var(--sapList_BorderColor, #d9d9d9); }
+  #contentSplit {
+    grid-template-columns: 100%;
+    grid-auto-rows: auto auto;
+  }
+  #speakersTableContainer {
+    border-right: none;
+    border-bottom: 1px solid var(--sapList_BorderColor, #d9d9d9);
+  }
   /* responsive min-height now handled by flex; retain a floor if needed via .chatArea */
 }
 
@@ -68,18 +84,50 @@
 [id$="--mainPage"] .sapMPageFooter .sapMTB {
   height: auto !important;
   min-height: 3rem;
-@media (max-width: 900px) {
-  #speakersTableContainer { border-right: none; border-bottom: 1px solid var(--sapList_BorderColor, #d9d9d9); }
 }
-[id$="--mainPage-cont"] { padding-top: 0 !important; }
+@media (max-width: 900px) {
+  #speakersTableContainer {
+    border-right: none;
+    border-bottom: 1px solid var(--sapList_BorderColor, #d9d9d9);
+  }
+}
+[id$="--mainPage-cont"] {
+  padding-top: 0 !important;
+}
 
 /* Responsive adjustments */
-@media (max-width: 1600px) { #speakersTableContainer { flex: 0 0 58%; } }
-@media (max-width: 1400px) { #speakersTableContainer { flex: 0 0 54%; } }
-@media (max-width: 1200px) { #speakersTableContainer { flex: 0 0 50%; } }
-@media (max-width: 1100px) { #speakersTableContainer { flex: 0 0 48%; } }
+@media (max-width: 1600px) {
+  #speakersTableContainer {
+    flex: 0 0 58%;
+  }
+}
+@media (max-width: 1400px) {
+  #speakersTableContainer {
+    flex: 0 0 54%;
+  }
+}
+@media (max-width: 1200px) {
+  #speakersTableContainer {
+    flex: 0 0 50%;
+  }
+}
+@media (max-width: 1100px) {
+  #speakersTableContainer {
+    flex: 0 0 48%;
+  }
+}
 @media (max-width: 900px) {
-  #contentSplit { flex-direction: column; }
-  #speakersTableContainer { flex: 0 0 auto; width: 100%; border-right: none; border-bottom: 1px solid var(--sapList_BorderColor, #d9d9d9); }
-  .chatArea, .chatScrollFlex { width: 100%; }
+  #contentSplit {
+    flex-direction: column;
+  }
+  #speakersTableContainer {
+    flex: 0 0 auto;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--sapList_BorderColor, #d9d9d9);
+  }
+  .chatArea,
+  .chatScrollFlex {
+    width: 100%;
+  }
 }
